@@ -1,46 +1,16 @@
-import {Router, Request, Response} from 'express';
+import {Router} from 'express';
+
+import * as HomeController from '../controllers/homeController';
+import * as InfoController from '../controllers/homeController';
+import * as UserController from '../controllers/userController';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response)=>{
-    let age: number = 90;
-    let showOld: boolean = false;
-
-    if(age > 50) {
-        showOld = true;
-    }
-
-    res.render('pages/home', {
-        name: 'Gabriel',
-        age: 90,
-        showOld,
-        products: [
-            {title: 'Produto X', price: 10},
-            {title: 'Produto Y', price: 15},
-            {title: 'Produto W', price: 20}
-        ],
-        frasesDoDia: [
-            'Alguma coisa legal',
-            'Outra coisa legal'
-        ]
-    });
-});
-
-router.get('pages/contato', (req: Request, res: Response)=>{
-    res.render('contato');
-});
-
-router.get('pages/sobre', (req: Request, res: Response)=>{
-    res.render('sobre');
-});
-
-router.get('/nome', (req: Request, res: Response)=>{
-
-    let nome: string = req.query.nome as string;
-
-    res.render('pages/nome', {
-        nome
-    });
-});
+router.get('/', HomeController.home);
+router.get('/contato', InfoController.contato);
+router.get('/sobre', InfoController.sobre);
+router.get('/nome', UserController.nome);
+router.get('/idade', UserController.idadeForm);
+router.post('/idade-resultado', UserController.idadeAction);
 
 export default router;
